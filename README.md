@@ -1,4 +1,4 @@
-## **PyGraphica** *1.0.0*
+## **PyGraphica** *0.0.4*
 *By Luke Campbell*
 
 PyGraphica is a simple GUI and game development module designed for Python, built of the Python bindings (pysdl2) for SDL-2.
