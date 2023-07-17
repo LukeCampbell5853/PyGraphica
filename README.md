@@ -1,7 +1,7 @@
 ## **PyGraphica** *0.0.4*
 *By Luke Campbell*
 
-PyGraphica is a simple GUI and game development module designed for Python, built of the Python bindings (pysdl2) for SDL-2.
+PyGraphica is an easy-to-learn GUI module designed for Python, built off the Python bindings (pysdl2) for SDL-2.
 
 *One important note before we start. For all coordinates and lengths, if represented as an integer will be interpreted as a measurement in pixels, and if represented as a string (e.g. '35') will be interpreted as a  percentage of the height or width.*
 
