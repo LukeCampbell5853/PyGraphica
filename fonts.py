@@ -1,22 +1,27 @@
-Arial = "my_fonts/arial.ttf"
+import os
+import sys
+
+root = os.path.join(os.path.join(sys.executable,".."),"Lib/site-packages/PyGraphica")
+
+Arial = os.path.join(root,"arial.ttf")
 #Arial font is owned by Monotype imaging
-Baskerville = "my_fonts/baskerville.ttf"
+Baskerville = os.path.join(root,"baskerville.ttf")
 #Baskerville font was designed by JohnBaskerville in the 1750s
-BrushScript = "my_fonts/brushscript.otf"
+BrushScript = os.path.join(root,"brushscript.otf")
 #BrushScript font is owned by Adobe Originals
-Calibri = "my_fonts/calibri.ttf"
+Calibri = os.path.join(root,"calibri.ttf")
 #Calibri is owned by Microsoft
-Courier = "my_fonts/courier.ttf"
+Courier = os.path.join(root,"courier.ttf")
 #Courier is owned  by IBM
-Garamond = "my_fonts/garamond.ttf"
+Garamond = os.path.join(root,"garamond.ttf")
 #Garamond is owned by Monotype imaging
-Helvetica  = "my_fonts/helvetica.ttf"
+Helvetica  = os.path.join(root,"helvetica.ttf")
 #Helvetica is owned by Monotype imaging
-Impact = "my_fonts/impact.ttf"
+Impact = os.path.join(root,"impact.ttf")
 #Impact is owned by Monotype imaging
-OpenDyslexic = "my_fonts/opendyslexic.otf"
+OpenDyslexic = os.path.join(root,"opendyslexic.otf")
 #OpenDyslexic is owned by Abelardo Gonzales
-TimesNewRoman= "my_fonts/timesnewroman.ttf"
+TimesNewRoman= os.path.join(root,"timesnewroman.ttf")
 #TimesNewRoman is owned by Monotype Imagine
-Trebuchet = "my_fonts/timesnewroman.ttf"
+Trebuchet = os.path.join(root,"timesnewroman.ttf")
 #Trebuchet is owned by Microsoft
