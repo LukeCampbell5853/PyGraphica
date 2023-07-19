@@ -1,7 +1,7 @@
-## **PyGraphica** *0.0.4*
+## **PyGraphica** *0.1.1*
 *By Luke Campbell*
 
-PyGraphica is an easy-to-learn GUI module designed for Python, built off the Python bindings (pysdl2) for SDL-2.
+PyGraphica is an easy-to-learn GUI module designed for Python, built on the Python bindings (pysdl2) for SDL-2.
 
 *One important note before we start. For all coordinates and lengths, if represented as an integer will be interpreted as a measurement in pixels, and if represented as a string (e.g. '35') will be interpreted as a  percentage of the height or width.*
 
@@ -220,11 +220,12 @@ A textbox is an input field in which users can type text. A textbox can be defin
 |y1| NA| integer or string of integer| y component of the start coordinate|
 |size| NA| integer or string of integer| height of text|
 |width| 1| integer or string of integer| width of textbox (NB: textbox will expand if text goes out of textbox)
+|font| fonts.Calibri| variable fromfont file or path to ttf/otf file| font in which the text will be displyed
 |default_text| Type here...| string| text which will be displayed in lighter shade if the user has not yet typed anything|
 
 For example:
 
-    code_input = draw.textbox(app,"20","10","3","80","ENTER CODE HERE")
+    code_input = draw.textbox(app,"20","10","3","80",fonts.OpenDyslexic,"ENTER CODE HERE")
 
 |name| description|
 |--|--|
