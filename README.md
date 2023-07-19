@@ -187,7 +187,7 @@ The text class can be defined by the following attributes:
 
 For example:
 
-    title = draw.text(app, 100, -50, 20, colours.NAVY_BLUE, "Hello world!", "OpenSans")
+    title = draw.text(app, 100, -50, 20, colours.NAVY_BLUE, "Hello world!", fonts.OpenDyslexic)
 
 Once the text object has been creeated the following attributes can be called:
 
