@@ -1,5 +1,5 @@
 """
-PyGraphica 1.0.0
+PyGraphica 0.1.1
 by Luke Campbell
 
 PyGraphica is a simple GUI and game library designed for Python. It works off the following classes:
@@ -23,6 +23,7 @@ import sdl2.ext
 import time
 import ctypes
 import os
+from PyGraphica import colours,origins,fonts
 from PIL import Image
 
 class window:
@@ -42,7 +43,7 @@ class window:
         self.__window.show()
     
     #Initialise window class
-    def __init__(self, name="PyGraphica", size=(800,600), resizable=False, icon=False, position=(0,20), origin=0, colour=(0,0,0)):
+    def __init__(self, name="PyGraphica", size=(800,600), resizable=False, icon=False, position=(0,20), origin=origins.TOP_LEFT, colour=colours.BLACK):
         self.name = name
         self.width = size[0]
         self.height = size[1]
@@ -208,7 +209,7 @@ class rect:
                 self.clicked = False
 
 class text:
-    def __init__(self, window, x1, y1, size, colour, content, font = "my_fonts/calibri.ttf"):
+    def __init__(self, window, x1, y1, size, colour, content, font = fonts.Calibri):
         self.__window = window
         self.x1 = x1
         self.y1 = y1
@@ -220,7 +221,7 @@ class text:
         self.width = 0
         self.hover = False
         self.clicked = False
-        self.font = os.getcwd() + "/" + font
+        self.font = font
         all_shapes.append(self)
 
         start = make_pos(self.__window,(self.x1,self.y1))
@@ -238,14 +239,42 @@ class text:
         self.height = textbox.h
 
         #Make function to get the endpoint of the text based on the position of the origin and the size of the text, important for making textboxes later on
-        if self.__window.origin == 0:
-            self.__get_end = lambda obj:(obj.x1+obj.width,obj.y1+obj.height)
-        elif self.__window.origin == 1:
-            self.__get_end = lambda obj:(obj.x1-obj.width,obj.y1+obj.height)
-        elif self.__window.origin in [2,4]:
-            self.__get_end = lambda obj:(obj.x1+obj.width,obj.y1-obj.height)
-        elif self.__window.origin == 3:
-            self.__get_end = lambda obj:(obj.x1-obj.width,obj.y1-obj.height)
+        if type(self.x1) == int and type(self.y1) == int and type(self.height) == int:
+            if self.__window.origin == 0:
+                self.__get_end = lambda obj:(obj.x1+obj.width,obj.y1+obj.height)
+            elif self.__window.origin == 1:
+                self.__get_end = lambda obj:(obj.x1-obj.width,obj.y1+obj.height)
+            elif self.__window.origin in [2,4]:
+                self.__get_end = lambda obj:(obj.x1+obj.width,obj.y1-obj.height)
+            elif self.__window.origin == 3:
+                self.__get_end = lambda obj:(obj.x1-obj.width,obj.y1-obj.height)
+        elif type(self.x1) == str and type(self.y1) == str:
+            if self.__window.origin == 0:
+                self.__get_end = lambda obj:(str(int(obj.x1)+int(rela_width(obj.__window,obj.width))),str(int(obj.y1)+int(rela_height(obj.__window,obj.height))))
+            elif self.__window.origin == 1:
+                self.__get_end = lambda obj:(str(int(obj.x1)-int(rela_width(obj.__window,obj.width))),str(int(obj.y1)+int(rela_height(obj.__window,obj.height))))
+            elif self.__window.origin in [2,4]:
+                self.__get_end = lambda obj:(str(int(obj.x1)+int(rela_width(obj.__window,obj.width))),str(int(obj.y1)-int(rela_height(obj.__window,obj.height))))
+            elif self.__window.origin == 3:
+                self.__get_end = lambda obj:(str(int(obj.x1)-int(rela_width(obj.__window,obj.width))),str(int(obj.y1)-int(rela_height(obj.__window,obj.height))))
+        else:
+            if self.__window.origin == 0:
+                def func(obj):
+                    x1,y1 = make_pos(obj.__window,(obj.x1,obj.y1))
+                    return((x1+make_width(obj.__window,obj.width),y1+make_height(obj.__window,obj.height)))
+            elif self.__window.origin == 1:
+                def func(obj):
+                    x1,y1 = make_pos(obj.__window,(obj.x1,obj.y1))
+                    return((x1-make_width(obj.__window,obj.width),y1+make_height(obj.__window,obj.height)))
+            elif self.__window.origin in [2,4]:
+                def func(obj):
+                    x1,y1 = make_pos(obj.__window,(obj.x1,obj.y1))
+                    return((x1+make_width(obj.__window,obj.width),y1-make_height(obj.__window,obj.height)))
+            elif self.__window.origin == 3:
+                def func(obj):
+                    x1,y1 = make_pos(obj.__window,(obj.x1,obj.y1))
+                    return((x1-make_width(obj.__window,obj.width),y1-make_height(obj.__window,obj.height)))
+            self.__get_end = func
         
         #Use function to define endpoint of text
         end = self.__get_end(self)
@@ -289,11 +318,12 @@ class text:
 
 #Text input field, where users can type things and programmers can easily extract them
 class textbox:
-    def __init__(self,window,x1,y1,size,width=1,default_text="Type here..."):
+    def __init__(self,window,x1,y1,size,width=1,font=fonts.Calibri,default_text="Type here..."):
         self.__window = window
         self.x1 = x1
         self.y1 = y1
         self.size = size
+        self.font = font
         self.width = width
         self.content = ""
         self.visible = True
@@ -301,15 +331,21 @@ class textbox:
         self.default_text = default_text
 
         #Text object component of textbox
-        self.__text = text(self.__window,self.x1,self.y1,self.size,(0,0,0),"Type here...","PyGraphica/fonts/calibri.ttf")
+        self.__text = text(self.__window,self.x1,self.y1,self.size,(0,0,0),"Type here...",self.font)
         #The textbox will have its own display function, so the text component must be removed from the list of objects to display
         all_shapes.remove(self.__text)
 
         #create function to calculate the width of the textbox to the start of the text
-        if self.__window.origin in [1,3]:
-            self.__add_width = lambda obj:obj.__text.x1-obj.width
+        if type(self.__text.x1) == str:
+            if self.__window.origin in [1,3]:
+                self.__add_width = lambda obj:(str(int(obj.__text.x1)-int(rela_width(obj.__window,obj.width))))
+            else:
+                self.__add_width = lambda obj:(str(int(obj.__text.x1)+int(rela_width(obj.__window,obj.width))))
         else:
-            self.__add_width = lambda obj:obj.__text.x1+obj.width
+            if self.__window.origin in [1,3]:
+                self.__add_width = lambda obj:(obj.__text.x1-make_width(obj.__window,obj.width))
+            else:
+                self.__add_width = lambda obj:(obj.__text.x1+make_width(obj.__window,obj.width))
 
         self.x2 = self.__text.x2
         self.y2 = self.__text.y2
@@ -328,7 +364,7 @@ class textbox:
         self.__box.y1 = self.y1
 
         #If the text typed in to the textbox is larger than the defaul width of the textbox, stretch to fit it, otherwise use default width
-        if self.width > self.__text.width:
+        if make_width(self.__window,self.width) > make_width(self.__window,self.__text.width):
             self.__box.x2 = self.__add_width(self)
             self.__box.y2 = self.__text.y2
         else:
@@ -584,10 +620,18 @@ def make_width(window,width):
     return(width)
 
 #Turn static or relative width into relative width
-rela_width = lambda window,width:str(int(100*(width/window.width)))
+def rela_width(window,width):
+    if type(width) == str:
+        return(width)
+    else:
+        return(str(int(100*(width/window.width))))
 
 #Turn static of relative height into relative height
-rela_height = lambda window,height:str(int(100*(height/window.height)))
+def rela_height(window,height):
+    if type(height) == str:
+        return(height)
+    else:
+        return(str(int(100*(height/window.height))))
 
 #List of shapes to be displayed
 all_shapes = []
