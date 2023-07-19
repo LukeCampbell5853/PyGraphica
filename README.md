@@ -183,7 +183,7 @@ The text class can be defined by the following attributes:
 |size| NA|  positive integer or string of positive integer| height| height of the text
 |colour| NA| variable from colours file or RGB tuple| colour of the text
 |content| NA| string| content of the text
-|font| OpenSans| string| font of the text
+|font| fonts.Calibri| variable from fonts file or path to ttf/otf file| font of the text
 
 For example:
 
