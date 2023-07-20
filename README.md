@@ -1,4 +1,4 @@
-        ## **PyGraphica** *0.1.1*
+## **PyGraphica** *0.1.1*
 *By Luke Campbell*
 
 PyGraphica is an easy-to-learn GUI module designed for Python, built on the Python bindings (pysdl2) for SDL-2.
