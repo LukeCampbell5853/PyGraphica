@@ -1,4 +1,4 @@
-## **PyGraphica** *0.1.1*
+        ## **PyGraphica** *0.1.1*
 *By Luke Campbell*
 
 PyGraphica is an easy-to-learn GUI module designed for Python, built on the Python bindings (pysdl2) for SDL-2.
@@ -122,8 +122,8 @@ The line class can be defined by the following attributes:
 |--|--|--|
 |window| window object| window which the line will be drawn to
 |x1| integer or string of integer| x component of the start coordinate
-|x2| integer or string of integer| x component of the end coordinate
 |y1| integer or string of integer| y component of the start coordinate
+|x2| integer or string of integer| x component of the end coordinate
 |y2| integer or string of integer| y component of the end coordinate
 |colour| variable from colours file or RGB tuple| colour of the line
 
